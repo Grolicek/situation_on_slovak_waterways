@@ -22,3 +22,13 @@
 # All that matters is that your final data is written to an SQLite database
 # called "data.sqlite" in the current working directory which has at least a table
 # called "data".
+
+import pandas as panda
+
+url = r'https://www.shmu.sk/sk/?page=1&id=ran_sprav'
+
+tables = panda.read_html(url)
+
+data = tables[0]
+
+print(data)
