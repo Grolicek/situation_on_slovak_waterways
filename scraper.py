@@ -23,12 +23,25 @@
 # called "data.sqlite" in the current working directory which has at least a table
 # called "data".
 
-import pandas as panda
+import pandas as pd
+import sqlite3
+import json
 
-url = r'https://www.shmu.sk/sk/?page=1&id=ran_sprav'
+lang = str
 
-tables = panda.read_html(url)
+# temp
+lang = 'sk'
 
-data = tables[0]
+url = fr'https://www.shmu.sk/{lang}/?page=1&id=ran_sprav'
 
-print(data)
+shmu_waterways_page = pd.read_html(url)
+
+waterways_table = shmu_waterways_page[0]
+
+print(waterways_table)
+
+"""with open('./data.json', 'r+', encoding='utf-8') as f:
+    waterways_dict = waterways_table.to_json(
+        f, 'index', force_ascii=False, indent=4)"""
+
+data = waterways_table.to_sql('data', sqlite3.Connection)
